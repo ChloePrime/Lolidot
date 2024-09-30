@@ -32,6 +32,15 @@ jobs:
             bin: ./bin/godot.windows.editor.x86_64.exe
             artifact: true
 
+          - name: Editor w/ Mono (target=editor)
+            cache-name: windows-editor-mono
+            target: editor
+            sconsflags: debug_symbols=no vsproj=yes vsproj_gen_only=no windows_subsystem=console module_mono_enabled=yes
+            bin: ./bin/godot.windows.editor.x86_64.mono.exe
+            build-mono: true
+            tests: false # Disabled due freeze caused by mix Mono build and CI
+            artifact: true
+
           - name: Editor w/ clang-cl (target=editor, tests=yes, use_llvm=yes)
             cache-name: windows-editor-clang
             target: editor
@@ -92,6 +101,16 @@ jobs:
         with:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
+
+      - name: Generate C# glue
+        if: matrix.build-mono
+        run: |
+          ${{ matrix.bin }} --headless --generate-mono-glue ./modules/mono/glue
+
+      - name: Build .NET solutions
+        if: matrix.build-mono
+        run: |
+          python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=windows
 
       - name: Prepare artifact
         if: ${{ matrix.artifact }}
