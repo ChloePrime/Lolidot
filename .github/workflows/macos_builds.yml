@@ -26,6 +26,14 @@ jobs:
             tests: true
             bin: "./bin/godot.macos.editor.universal"
 
+          - name: Editor w/ Mono (target=editor)
+            cache-name: macos-editor-mono
+            target: editor
+            sconsflags: module_mono_enabled=yes
+            bin: "./bin/godot.macos.editor.mono.universal"
+            build-mono: true
+            tests: false # Disabled due freeze caused by mix Mono build and CI
+
           - name: Template (target=template_release)
             cache-name: macos-template
             target: template_release
@@ -72,6 +80,16 @@ jobs:
         with:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
+
+      - name: Generate C# glue
+        if: matrix.build-mono
+        run: |
+          ${{ matrix.bin }} --headless --generate-mono-glue ./modules/mono/glue
+
+      - name: Build .NET solutions
+        if: matrix.build-mono
+        run: |
+          ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=macos
 
       - name: Prepare artifact
         run: |
