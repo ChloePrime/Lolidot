@@ -1361,7 +1361,7 @@
 			<return type="void" />
 			<param index="0" name="frames" type="int" enum="RenderingServer.EnvironmentHDDAGIInactiveProbeFrames" />
 			<description>
-				Set the amount of frames it takes to process inactive probes (inactive probes are those not connected to any geometry and not visible by the camera). They process (raytrace) at a lower framerate in order to save GPU resouces.
+				Set the amount of frames it takes to process inactive probes (inactive probes are those not connected to any geometry and not visible by the camera). They process (raytrace) at a lower framerate in order to save GPU resources.
 			</description>
 		</method>
 		<method name="environment_set_sky">
@@ -5283,7 +5283,13 @@
 		<constant name="ENV_HDDAGI_CASCADE_FORMAT_16x16x16" value="1" enum="EnvironmentHDDAGICascadeFormat">
 			Full resolution cascade format for DynamicGI (HDDAGI).
 		</constant>
-		<constant name="ENV_HDDAGI_CASCADE_FORMAT_MAX" value="2" enum="EnvironmentHDDAGICascadeFormat">
+		<constant name="ENV_HDDAGI_CASCADE_FORMAT_16x16x16_75_PERCENT_HEIGHT" value="2" enum="EnvironmentHDDAGICascadeFormat">
+			75% resolution cascade format for DynamicGI (HDDAGI).
+		</constant>
+		<constant name="ENV_HDDAGI_CASCADE_FORMAT_16x16x16_50_PERCENT_HEIGHT" value="3" enum="EnvironmentHDDAGICascadeFormat">
+			50% resolution cascade format for DynamicGI (HDDAGI).
+		</constant>
+		<constant name="ENV_HDDAGI_CASCADE_FORMAT_MAX" value="4" enum="EnvironmentHDDAGICascadeFormat">
 		</constant>
 		<constant name="ENV_HDDAGI_CONVERGE_IN_6_FRAMES" value="0" enum="EnvironmentHDDAGIFramesToConverge">
 			Converge the DynamicGI (HDDAGI) in 6 frames. This means it will take 6 frames for light changes to update, but the lighting quality will be lower.
