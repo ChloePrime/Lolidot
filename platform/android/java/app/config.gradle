@@ -110,6 +110,9 @@ ext.generateGodotLibraryVersion = { List<String> requiredKeys ->
         List<String> lines = versionFile.readLines()
         for (String line in lines) {
             String[] keyValue = line.split("=")
+            if (keyValue.length != 2) {
+                continue;
+            }
             String key = keyValue[0].trim()
             String value = keyValue[1].trim().replaceAll("\"", "")
 
