@@ -42,18 +42,22 @@ jobs:
 
       # This needs to happen before Python and npm execution; it must happen before any extra files are written.
       - name: .gitignore checks (gitignore_check.sh)
+        if: ${{ vars.DISABLE_GODOT_STATIC_CHECK == '' }}
         run: |
           bash ./misc/scripts/gitignore_check.sh
 
       - name: Style checks via pre-commit
+        if: ${{ vars.DISABLE_GODOT_STATIC_CHECK == '' }}
         uses: pre-commit/action@v3.0.1
         with:
           extra_args: --verbose --files ${{ env.CHANGED_FILES }}
 
       - name: Python builders checks via pytest
+        if: ${{ vars.DISABLE_GODOT_STATIC_CHECK == '' }}
         run: |
           pytest ./tests/python_build
 
       - name: Class reference schema checks
+        if: ${{ vars.DISABLE_GODOT_STATIC_CHECK == '' }}
         run: |
           xmllint --noout --schema doc/class.xsd doc/classes/*.xml modules/*/doc_classes/*.xml platform/*/doc_classes/*.xml
