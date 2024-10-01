@@ -40,12 +40,13 @@ jobs:
             tests: false # Disabled due freeze caused by mix Mono build and CI
             artifact: true
 
-          - name: Template (target=template_release)
-            cache-name: windows-template
+          - name: Template w/ Mono (target=template_release)
+            cache-name: windows-template-mono
             target: template_release
             tests: true
-            sconsflags: debug_symbols=no tests=yes
-            bin: "./bin/godot.windows.template_release.x86_64.console.exe"
+            build-mono: false
+            sconsflags: debug_symbols=no tests=yes module_mono_enabled=yes
+            bin: "./bin/godot.windows.template_release.x86_64.mono.console.exe"
 
     steps:
       - uses: actions/checkout@v4

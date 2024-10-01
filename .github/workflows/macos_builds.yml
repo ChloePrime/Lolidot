@@ -20,12 +20,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Editor (target=editor, tests=yes)
-            cache-name: macos-editor
-            target: editor
-            tests: true
-            bin: "./bin/godot.macos.editor.universal"
-
           - name: Editor w/ Mono (target=editor)
             cache-name: macos-editor-mono
             target: editor
@@ -34,12 +28,13 @@ jobs:
             build-mono: true
             tests: false # Disabled due freeze caused by mix Mono build and CI
 
-          - name: Template (target=template_release)
-            cache-name: macos-template
+          - name: Template w/ Mono (target=template_release)
+            cache-name: macos-template-mono
             target: template_release
             tests: true
-            sconsflags: debug_symbols=no tests=yes
-            bin: "./bin/godot.macos.template_release.universal"
+            build-mono: false
+            sconsflags: debug_symbols=no tests=yes module_mono_enabled=yes
+            bin: "./bin/godot.macos.template_release.mono.universal"
 
     steps:
       - uses: actions/checkout@v4
@@ -81,22 +76,22 @@ jobs:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
 
-      - name: Generate C# glue
-        if: matrix.build-mono
-        run: |
-          ${{ matrix.bin }} --headless --generate-mono-glue ./modules/mono/glue
-
-      - name: Build .NET solutions
-        if: matrix.build-mono
-        run: |
-          ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=macos
-
       - name: Prepare artifact
         run: |
-          lipo -create ./bin/godot.macos.${{ matrix.target }}.x86_64 ./bin/godot.macos.${{ matrix.target }}.arm64 -output ./bin/godot.macos.${{ matrix.target }}.universal
+          lipo -create ./bin/godot.macos.${{ matrix.target }}.x86_64 ./bin/godot.macos.${{ matrix.target }}.arm64 -output ./bin/godot.macos.${{ matrix.target }}.mono.universal
           rm ./bin/godot.macos.${{ matrix.target }}.x86_64 ./bin/godot.macos.${{ matrix.target }}.arm64
           strip bin/godot.*
           chmod +x bin/godot.*
+
+#      - name: Generate C# glue
+#        if: matrix.build-mono
+#        run: |
+#          ${{ matrix.bin }} --headless --generate-mono-glue ./modules/mono/glue
+#
+#      - name: Build .NET solutions
+#        if: matrix.build-mono
+#        run: |
+#          ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=macos
 
       - name: Upload artifact
         uses: ./.github/actions/upload-artifact
