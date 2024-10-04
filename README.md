@@ -9,10 +9,14 @@
 ## About this fork
 I forked the Godot Engine and rebranded the fork,<p>
 for the following reasons:<p>
-- For supply chain security, against possible license change of the upstream to enforce woking, or possible sanctions that disables us from forking the engine at the time when it happens.
+- For supply chain security, against possible license change of the upstream to enforce `woking`, or possible sanctions that disables us from forking the engine at the time when it happens.
 - For faster merging upstream pull requests.
 - For improving the core of the engine, e.g. better implementation of signals in C#.
 
+## Community:
+[![Discord Invite Badge](https://dcbadge.limes.pink/api/server/https://discord.gg/zkspfFwqDg)](https://t.co/RY4eexSCKh)
+
+# Original Readme:
 ## 2D and 3D cross-platform game engine
 
 **A fork of [Godot Engine](https://godotengine.org) is a feature-packed, cross-platform
@@ -79,5 +83,3 @@ There are also a number of other
 provided by the community, such as text and video tutorials, demos, etc.
 Consult the [community channels](https://godotengine.org/community)
 for more information.
-
-[![Discord Invite Badge](https://dcbadge.limes.pink/api/server/https://discord.gg/zkspfFwqDg)](https://t.co/RY4eexSCKh)
