@@ -14,7 +14,7 @@ for the following reasons:<p>
 - For improving the core of the engine, e.g. better implementation of signals in C#.
 
 ## Community:
-[![Discord Invite Badge](https://dcbadge.limes.pink/api/server/https://discord.gg/zkspfFwqDg)](https://t.co/RY4eexSCKh)
+[![Discord](https://dcbadge.limes.pink/api/server/https://discord.gg/AkDahYT3Aw)](https://discord.gg/AkDahYT3Aw)
 
 # Original Readme:
 ## 2D and 3D cross-platform game engine
